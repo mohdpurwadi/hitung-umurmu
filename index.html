@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hitung Umur</title>
+  <style>
+    /* Reset styling */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Global styles */
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f4f4f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      background: #ffffff;
+      width: 100%;
+      max-width: 360px;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 24px;
+      color: #333;
+      margin-bottom: 20px;
+      font-weight: bold;
+    }
+
+    label {
+      font-size: 14px;
+      color: #777;
+      margin-bottom: 10px;
+      display: block;
+      font-weight: 500;
+    }
+
+    input[type="date"] {
+      width: 100%;
+      padding: 14px;
+      font-size: 16px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background-color: #f9f9f9;
+      margin-bottom: 20px;
+      outline: none;
+      transition: border 0.3s ease;
+    }
+
+    input[type="date"]:focus {
+      border-color: #4CAF50;
+    }
+
+    button {
+      width: 100%;
+      padding: 16px;
+      background-color: #4CAF50;
+      color: #fff;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-bottom: 20px;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    h2 {
+      font-size: 18px;
+      color: #333;
+      margin-top: 20px;
+    }
+
+    #hasil {
+      font-size: 24px;
+      font-weight: bold;
+      color: #4CAF50;
+    }
+
+    /* Responsiveness */
+    @media (max-width: 480px) {
+      .container {
+        padding: 15px;
+      }
+
+      h1 {
+        font-size: 22px;
+      }
+
+      input[type="date"], button {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Hitung Umur Anda</h1>
+
+    <label for="tanggalLahir">Pilih Tanggal Lahir:</label>
+    <input type="date" id="tanggalLahir" required>
+
+    <button onclick="tampilkanUmur()">Hitung Umur</button>
+
+    <h2>Umur Anda: <span id="hasil"></span></h2>
+  </div>
+
+  <script>
+    function hitungUmur(tanggalLahir) {
+      const sekarang = new Date();
+      const tahunSekarang = sekarang.getFullYear();
+      const bulanSekarang = sekarang.getMonth() + 1; // Bulan dimulai dari 0, jadi perlu ditambah 1
+      const tanggalSekarang = sekarang.getDate();
+
+      const tahunLahir = tanggalLahir.getFullYear();
+      const bulanLahir = tanggalLahir.getMonth() + 1;
+      const tanggalLahirHari = tanggalLahir.getDate();
+
+      let umur = tahunSekarang - tahunLahir;
+
+      // Cek jika sudah lewat tanggal lahir di tahun ini
+      if (bulanSekarang < bulanLahir || (bulanSekarang === bulanLahir && tanggalSekarang < tanggalLahirHari)) {
+        umur--;
+      }
+
+      return umur;
+    }
+
+    function tampilkanUmur() {
+      const tanggalLahirInput = document.getElementById('tanggalLahir').value;
+
+      if (tanggalLahirInput) {
+        const tanggalLahir = new Date(tanggalLahirInput);
+        const umur = hitungUmur(tanggalLahir);
+        document.getElementById('hasil').textContent = umur + ' tahun';
+      } else {
+        document.getElementById('hasil').textContent = 'Tolong pilih tanggal lahir!';
+      }
+    }
+  </script>
+
+</body>
+</html>
